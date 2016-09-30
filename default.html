@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script>
+      $(document).ready(function(){
+		oFecha = now();
+		oFecha.setDate(oFecha.getDate()-1);
+		days = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+		$("h2").text(days[oFecha.getDay()] + '     ' + 'Mi Log');
+		
+        $("button").click(function(){
+			oFecha = now();
+			switch($(this).html().toLowerCase()){
+				case "room":
+					//alert('room');
+				break;
+				case "sleep":
+					//alert('sleep');
+				break;
+				case "seat":
+					//alert('seat');
+				break;
+			}
+        });
+		
+		function now() {
+			var a = new Date();
+			d = a.toLocaleTimeString();
+			$("p").text(d);
+			return a;
+		}
+      });
+    </script>
+<style>
+p {
+    border:1px solid black;
+	font-size: 45px;
+	margin-top: 60px;
+	text-align: center;
+}
+h2 {text-align: left; margin-bottom: 50px;}
+</style>
+</head>
+<body>
+
+<div data-role="page" id="pageone" data-theme="b">
+  <div data-role="main" class="ui-content" >
+    <pre><h2></h2></pre>
+    <button>Room</button><br>
+	<button>Sleep</button><br>
+    <button>Seat</button>
+	<p>6:39</p>
+  </div>
+</div> 
+
+</body>
+</html>
