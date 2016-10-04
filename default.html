@@ -4,34 +4,39 @@
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
     <script>
       $(document).ready(function(){
-		oFecha = now();
-		oFecha.setDate(oFecha.getDate()-1);
+		ayer = fecha();
+		ayer.setDate(ayer.getDate()-1);
 		days = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
-		$("h2").text(days[oFecha.getDay()] + '     ' + 'Mi Log');
+		$("h2").text(days[ayer.getDay()] + '     ' + 'Mi Log');
 		
         $("button").click(function(){
-			oFecha = now();
+			hoy = fecha();
 			switch($(this).html().toLowerCase()){
-				case "room":
-					//alert('room');
+				case "room":			
+				  $.post("http://localhost/create", {diaId:ayer.toMysqlFormat().slice(0,10), stamp:hoy.toMysqlFormat(), miBot:'room'}, function(data){});
 				break;
 				case "sleep":
-					//alert('sleep');
+				  $.post("http://localhost/create", {diaId:ayer.toMysqlFormat().slice(0,10), stamp:hoy.toMysqlFormat(), miBot:'sleep'}, function(data){});
 				break;
 				case "seat":
-					//alert('seat');
+				  $.post("http://localhost/create", {diaId:ayer.toMysqlFormat().slice(0,10), stamp:hoy.toMysqlFormat(), miBot:'seat'}, function(data){});
 				break;
 			}
         });
 		
-		function now() {
-			var a = new Date();
-			d = a.toLocaleTimeString();
-			$("p").text(d);
-			return a;
+		function fecha() {
+			var oFecha = new Date();
+			mistr = oFecha.toLocaleTimeString();
+			$("p").text(mistr);
+			return oFecha;
 		}
+		Date.prototype.toMysqlFormat = function() {
+			return this.getFullYear() + "-" + twoDigits(1 + this.getMonth()) + "-" + twoDigits(this.getDate()) + " " + twoDigits(this.getHours()) + ":" + twoDigits(this.getMinutes()) + ":" + twoDigits(this.getSeconds());
+		}		
+		function twoDigits(minum) { return ('0' + minum ).slice(-2) }	
       });
     </script>
 <style>
@@ -40,6 +45,7 @@ p {
 	font-size: 45px;
 	margin-top: 60px;
 	text-align: center;
+	color: green;
 }
 h2 {text-align: left; margin-bottom: 50px;}
 </style>
